@@ -1,0 +1,45 @@
+# Ignore Python/Django files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+.env
+venv/
+db.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+*.swp
+.DS_Store
+
+# Ignore environment variables & credentials
+.env
+.env.local
+config.json
+
+# Ignore Django migrations (optional, but recommended)
+**/migrations/*
+
+# Ignore Node.js/React files
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Ignore build & cache files
+build/
+dist/
+.cache/
+public/
+coverage/
+.vscode/
+.idea/
+*.bak
+
+# Ignore OS system files
+Thumbs.db
+.DS_Store
