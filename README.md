@@ -1,6 +1,23 @@
 <h1>AI-Powered Search Tool</h1>
 # 🚀 AI-Powered Search & Aggregation Tool  
 
+
+<p align="center">
+  <img src="assets/Search Page.png" width="30%" /><br/>
+  <strong>Search Page</strong>
+</p>
+
+<p align="center">
+  <img src="assets/Results.png" width="30%" /><br/>
+  <strong>Results</strong>
+</p>
+
+<p align="center">
+  <img src="assets/Dark Mode.png" width="30%" /><br/>
+  <strong>Div with Dark mode</strong>
+</p>
+
+
 ## 📌 Project Overview  
 This is a full-stack web application that allows users to **search across Google & YouTube** and get structured results efficiently. It features **real-time search, filtering, sorting, search history tracking, and smooth animations** for a great user experience.
 
