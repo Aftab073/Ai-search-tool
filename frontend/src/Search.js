@@ -78,34 +78,56 @@ const Search = () => {
         setError("");
         try {
             const response = await axios.post(`${API_BASE}/api/search/`, { query });
-            setResults(response.data);
+            if (response.data.error) {
+                setError(response.data.error);
+                setResults([]);
+            } else {
+                setResults(response.data);
+            }
         } catch (err) {
-            setError("Failed to fetch results. Please try again.");
-            console.error(err);
+            console.error("Search error:", err);
+            if (err.response) {
+                setError(err.response.data.error || "Failed to fetch results. Please try again.");
+            } else if (err.request) {
+                setError("No response from server. Please check your connection.");
+            } else {
+                setError("An error occurred. Please try again.");
+            }
+            setResults([]);
         }
         setLoading(false);
     };
 
-
     const fetchSearchHistory = async () => {
         try {
             const response = await axios.get(`${API_BASE}/api/history/`);
-            setHistory(response.data);
+            if (response.data.error) {
+                console.error("History error:", response.data.error);
+                setHistory([]);
+            } else {
+                setHistory(response.data);
+            }
         } catch (error) {
             console.error("Error fetching history:", error);
+            setHistory([]);
         }
         setShowHistory(!showHistory); 
     };
 
     const clearHistory = async () => {
         try {
-            await axios.delete(`${API_BASE}/api/history/`); 
-            setHistory([]);
+            const response = await axios.delete(`${API_BASE}/api/history/`);
+            if (response.data.error) {
+                console.error("Clear history error:", response.data.error);
+            } else {
+                setHistory([]);
+            }
         } catch (error) {
             console.error("Error clearing history:", error);
         }
         setShowHistory(false);
     };
+
     const filteredResults = results.filter((item) => {
         if (filter === "All") return true;
         return item.source === filter; // Exact match for source
