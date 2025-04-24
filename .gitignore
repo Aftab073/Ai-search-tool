@@ -34,7 +34,7 @@ yarn.lock
 build/
 dist/
 .cache/
-public/
+
 coverage/
 .vscode/
 .idea/

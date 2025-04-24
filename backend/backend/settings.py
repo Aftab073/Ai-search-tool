@@ -58,6 +58,10 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:3000').split(',')
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://ai-search-tool.netlify.app",
+]
+
 
 
 ROOT_URLCONF = 'backend.urls'
