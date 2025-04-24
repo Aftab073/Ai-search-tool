@@ -37,7 +37,7 @@ const DarkModeToggle = ({ darkMode, toggleDarkMode }) => {
     );
 };
 
-const API_BASE = process.env.REACT_APP_API_URL;
+const API_BASE = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
 
 const Search = () => {
     const [query, setQuery] = useState("");
@@ -77,7 +77,7 @@ const Search = () => {
         setLoading(true);
         setError("");
         try {
-            const response = await axios.post("${API_BASE}/api/search/", { query });
+            const response = await axios.post(`${API_BASE}/api/search/`, { query });
             setResults(response.data);
         } catch (err) {
             setError("Failed to fetch results. Please try again.");
@@ -89,7 +89,7 @@ const Search = () => {
 
     const fetchSearchHistory = async () => {
         try {
-            const response = await axios.get("${API_BASE}/api/history/");
+            const response = await axios.get(`${API_BASE}/api/history/`);
             setHistory(response.data);
         } catch (error) {
             console.error("Error fetching history:", error);
@@ -99,7 +99,7 @@ const Search = () => {
 
     const clearHistory = async () => {
         try {
-            await axios.delete("${API_BASE}/api/history/"); 
+            await axios.delete(`${API_BASE}/api/history/`); 
             setHistory([]);
         } catch (error) {
             console.error("Error clearing history:", error);
