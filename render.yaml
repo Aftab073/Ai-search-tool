@@ -1,9 +1,13 @@
 services:
   - type: web
-    name: ai-backend
+    name: ai-search-backend
     env: python
-    buildCommand: ""
-    startCommand: gunicorn backend.wsgi:application
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn backend.backend.wsgi:application
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: backend.settings
+      - key: SERPAPI_KEY
+        value: 9cbe7e2e142f1df09e8d415df371d16cfea3f11220aa78e3728fe1b33fc88a3a
+      - key: YOUTUBE_API_KEY
+        value: AIzaSyC7zuz39uor3U-Y4u9xIpNspKzBtNt07KU
