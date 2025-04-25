@@ -1,1 +1,1 @@
-web: gunicorn backend.config.wsgi:application --log-file - 
+web: PYTHONPATH=/opt/render/project/src/backend gunicorn backend.config.wsgi:application --log-file - 
