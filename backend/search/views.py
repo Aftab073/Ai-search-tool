@@ -4,14 +4,36 @@ from rest_framework.response import Response
 from django.conf import settings
 from .models import SearchHistory
 import logging
+from rest_framework import status
 
 logger = logging.getLogger(__name__)
 
-@api_view(["POST"])
+@api_view(["GET", "POST"])
 def search_query(request):
+    """
+    Search endpoint that accepts both GET and POST requests.
+    GET: Returns API documentation
+    POST: Performs a search with the provided query
+    """
+    if request.method == "GET":
+        return Response({
+            "description": "Search API endpoint",
+            "methods": {
+                "POST": {
+                    "description": "Perform a search",
+                    "parameters": {
+                        "query": "string (required) - The search query"
+                    }
+                }
+            }
+        })
+
     query = request.data.get("query")
     if not query:
-        return Response({"error": "Query parameter is required"}, status=400)
+        return Response(
+            {"error": "Query parameter is required"}, 
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
     try:
         # Save query in database
@@ -59,29 +81,47 @@ def search_query(request):
                 logger.error(f"Error fetching YouTube results: {str(e)}")
 
         if not results:
-            return Response({"error": "No results found. Please try a different query."}, status=404)
+            return Response(
+                {"error": "No results found. Please try a different query."}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
 
         return Response(results)
 
     except Exception as e:
         logger.error(f"Error in search_query: {str(e)}")
-        return Response({"error": "An error occurred while processing your request"}, status=500)
+        return Response(
+            {"error": "An error occurred while processing your request"}, 
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
 @api_view(["GET"])
 def get_search_history(request):
+    """
+    Get the last 10 search queries from history
+    """
     try:
         history = SearchHistory.objects.all().order_by("-timestamp")[:10]
         data = [{"query": item.query, "timestamp": item.timestamp} for item in history]
         return Response(data)
     except Exception as e:
         logger.error(f"Error in get_search_history: {str(e)}")
-        return Response({"error": "Failed to fetch search history"}, status=500)
+        return Response(
+            {"error": "Failed to fetch search history"}, 
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
 @api_view(["DELETE"])
 def clear_search_history(request):
+    """
+    Clear all search history
+    """
     try:
         SearchHistory.objects.all().delete()
         return Response({"message": "Search history cleared successfully"})
     except Exception as e:
         logger.error(f"Error in clear_search_history: {str(e)}")
-        return Response({"error": "Failed to clear search history"}, status=500)
+        return Response(
+            {"error": "Failed to clear search history"}, 
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
