@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'search.apps.SearchConfig',
+    'backend.search.apps.SearchConfig',
 ]
 
 MIDDLEWARE = [
