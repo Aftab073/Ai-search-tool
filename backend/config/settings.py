@@ -120,6 +120,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Security settings
 if not DEBUG:
+    # Production settings
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
@@ -129,13 +130,18 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     X_FRAME_OPTIONS = 'DENY'
+    USE_X_FORWARDED_HOST = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 else:
+    # Development settings
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
     SECURE_BROWSER_XSS_FILTER = False
     SECURE_CONTENT_TYPE_NOSNIFF = False
     X_FRAME_OPTIONS = 'SAMEORIGIN'
+    USE_X_FORWARDED_HOST = False
+    SECURE_PROXY_SSL_HEADER = None
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
