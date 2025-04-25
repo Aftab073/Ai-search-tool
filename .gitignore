@@ -1,45 +1,129 @@
-# Ignore Python/Django files
+# Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-env/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+bin/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+.pytest_cache/
+
+# Virtual Environment
 .env
+.venv
+env/
 venv/
-db.sqlite3
+ENV/
+env.bak/
+venv.bak/
+
+# Django
 *.log
 *.pot
 *.pyc
-*.pyo
-*.swp
-.DS_Store
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+local_settings.py
 
-# Ignore environment variables & credentials
+# If you're using PostgreSQL
+*.psql
+*.pgsql
+*.sql
+
+# Node/React
+node_modules/
+/frontend/build/
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp/
+.pnp.js
+coverage/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# API Keys and Secrets
 .env
 .env.local
+.env.*.local
+*.pem
 config.json
 
-# Ignore Django migrations (optional, but recommended)
-**/migrations/*
+# Deployment files
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
 
-# Ignore Node.js/React files
-node_modules/
-npm-debug.log
-yarn-debug.log
-yarn-error.log
-package-lock.json
-yarn.lock
+# Testing
+.coverage
+htmlcov/
+.tox/
+.nox/
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
 
-# Ignore build & cache files
-build/
-dist/
-.cache/
-
-coverage/
-.vscode/
-.idea/
-*.bak
-
-# Ignore OS system files
-Thumbs.db
-.DS_Store
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
