@@ -147,7 +147,12 @@ else:
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS settings
-CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:3000,https://ai-search-tool.netlify.app').split(',')
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'https://ai-search-tool.netlify.app',
+    'https://ai-search-tool-1.onrender.com'
+]
+
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -168,8 +173,15 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
-CORS_ORIGIN_ALLOW_ALL = DEBUG  # Only allow all origins in development
-CORS_ALLOW_ALL_ORIGINS = DEBUG  # Only allow all origins in development
+
+# Always allow CORS preflight requests
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_PREFLIGHT_MAX_AGE = 86400  # 24 hours
+
+# Additional CORS settings
+CORS_EXPOSE_HEADERS = []
+CORS_REPLACE_HTTPS_REFERER = False
 
 # REST Framework settings
 REST_FRAMEWORK = {

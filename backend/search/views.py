@@ -99,10 +99,27 @@ def search_query(request):
 def get_search_history(request):
     """
     Get the last 10 search queries from history
+    Returns:
+        - List of search queries with timestamps
+        - Total number of searches
+        - Most recent search time
     """
     try:
         history = SearchHistory.objects.all().order_by("-timestamp")[:10]
-        data = [{"query": item.query, "timestamp": item.timestamp} for item in history]
+        total_searches = SearchHistory.objects.count()
+        most_recent = history[0].timestamp if history else None
+        
+        data = {
+            "total_searches": total_searches,
+            "most_recent": most_recent,
+            "history": [
+                {
+                    "query": item.query,
+                    "timestamp": item.timestamp,
+                    "time_ago": f"{(item.timestamp - most_recent).total_seconds() / 3600:.1f} hours ago" if most_recent else "now"
+                } for item in history
+            ]
+        }
         return Response(data)
     except Exception as e:
         logger.error(f"Error in get_search_history: {str(e)}")
