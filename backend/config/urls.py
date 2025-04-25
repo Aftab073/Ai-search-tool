@@ -16,12 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
+from django.conf import settings
+from django.conf.urls.static import static
 
 @api_view(['GET'])
 @csrf_exempt
@@ -70,11 +72,20 @@ def handle_404(request, exception=None):
         "status_code": 404
     }, status=status.HTTP_404_NOT_FOUND)
 
+def favicon(request):
+    return HttpResponse(status=204)
+
 urlpatterns = [
     path('', health_check, name='health_check'),
+    path('api/', api_docs, name='api_root'),
     path('api/docs/', api_docs, name='api_docs'),
     path('admin/', admin.site.urls),
     path('api/search/', include('backend.search.urls')),
+    path('favicon.ico', favicon, name='favicon'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = handle_404
