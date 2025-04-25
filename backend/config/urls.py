@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 
 @api_view(['GET'])
 def health_check(request):
@@ -30,7 +31,7 @@ def health_check(request):
             "search_history": "/api/search/history/",
             "admin": "/admin/"
         }
-    })
+    }, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def api_docs(request):
@@ -52,7 +53,21 @@ def api_docs(request):
                 "description": "Get search history"
             }
         }
-    })
+    }, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def handle_404(request, exception=None):
+    return Response({
+        "error": "Not Found",
+        "message": "The requested resource was not found on this server.",
+        "available_endpoints": {
+            "root": "/",
+            "api_docs": "/api/",
+            "search": "/api/search/",
+            "search_history": "/api/search/history/",
+            "admin": "/admin/"
+        }
+    }, status=status.HTTP_404_NOT_FOUND)
 
 urlpatterns = [
     path('', health_check, name='health_check'),
@@ -60,3 +75,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/search/', include('backend.search.urls')),
 ]
+
+# Add handler404
+handler404 = handle_404
