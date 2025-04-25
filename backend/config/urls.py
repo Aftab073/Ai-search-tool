@@ -60,21 +60,14 @@ def handle_404(request, exception=None):
     return Response({
         "error": "Not Found",
         "message": "The requested resource was not found on this server.",
-        "available_endpoints": {
-            "root": "/",
-            "api_docs": "/api/",
-            "search": "/api/search/",
-            "search_history": "/api/search/history/",
-            "admin": "/admin/"
-        }
+        "status_code": 404
     }, status=status.HTTP_404_NOT_FOUND)
 
 urlpatterns = [
     path('', health_check, name='health_check'),
-    path('api/', api_docs, name='api_docs'),
+    path('api/docs/', api_docs, name='api_docs'),
     path('admin/', admin.site.urls),
     path('api/search/', include('backend.search.urls')),
 ]
 
-# Add handler404
 handler404 = handle_404
