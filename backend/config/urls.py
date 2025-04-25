@@ -17,12 +17,46 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
+@api_view(['GET'])
 def health_check(request):
-    return JsonResponse({"status": "healthy", "service": "AI Search Tool API"})
+    return Response({
+        "status": "healthy",
+        "service": "AI Search Tool API",
+        "endpoints": {
+            "search": "/api/search/",
+            "search_history": "/api/search/history/",
+            "admin": "/admin/"
+        }
+    })
+
+@api_view(['GET'])
+def api_docs(request):
+    return Response({
+        "name": "AI Search Tool API",
+        "version": "1.0.0",
+        "endpoints": {
+            "search": {
+                "url": "/api/search/",
+                "method": "POST",
+                "description": "Search for information using AI",
+                "parameters": {
+                    "query": "string (required)"
+                }
+            },
+            "search_history": {
+                "url": "/api/search/history/",
+                "method": "GET",
+                "description": "Get search history"
+            }
+        }
+    })
 
 urlpatterns = [
     path('', health_check, name='health_check'),
+    path('api/', api_docs, name='api_docs'),
     path('admin/', admin.site.urls),
     path('api/search/', include('backend.search.urls')),
 ]
