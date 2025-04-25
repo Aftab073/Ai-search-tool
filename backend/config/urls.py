@@ -20,20 +20,26 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 
 @api_view(['GET'])
+@csrf_exempt
 def health_check(request):
     return Response({
         "status": "healthy",
         "service": "AI Search Tool API",
+        "version": "1.0.0",
         "endpoints": {
             "search": "/api/search/",
             "search_history": "/api/search/history/",
-            "admin": "/admin/"
+            "admin": "/admin/",
+            "docs": "/api/docs/"
         }
     }, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
+@csrf_exempt
 def api_docs(request):
     return Response({
         "name": "AI Search Tool API",
@@ -56,6 +62,7 @@ def api_docs(request):
     }, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
+@csrf_exempt
 def handle_404(request, exception=None):
     return Response({
         "error": "Not Found",

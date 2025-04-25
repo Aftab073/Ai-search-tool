@@ -110,7 +110,7 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -168,8 +168,8 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
-CORS_ORIGIN_ALLOW_ALL = True  # For development only
-CORS_ALLOW_ALL_ORIGINS = True  # For development only
+CORS_ORIGIN_ALLOW_ALL = DEBUG  # Only allow all origins in development
+CORS_ALLOW_ALL_ORIGINS = DEBUG  # Only allow all origins in development
 
 # REST Framework settings
 REST_FRAMEWORK = {
