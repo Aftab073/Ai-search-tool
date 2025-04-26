@@ -50,8 +50,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -181,6 +181,11 @@ CORS_PREFLIGHT_MAX_AGE = 86400  # 24 hours
 
 # Additional CORS settings
 CORS_EXPOSE_HEADERS = []
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+    'https://ai-search-tool.netlify.app',
+    'https://ai-search-tool-1.onrender.com'
+]
 
 # REST Framework settings
 REST_FRAMEWORK = {
