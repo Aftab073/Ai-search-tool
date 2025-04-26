@@ -132,6 +132,9 @@ if not DEBUG:
     X_FRAME_OPTIONS = 'DENY'
     USE_X_FORWARDED_HOST = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    CSRF_TRUSTED_ORIGINS = [
+        "https://ai-search-tool.netlify.app",
+    ]
 else:
     # Development settings
     SECURE_SSL_REDIRECT = False
@@ -142,6 +145,9 @@ else:
     X_FRAME_OPTIONS = 'SAMEORIGIN'
     USE_X_FORWARDED_HOST = False
     SECURE_PROXY_SSL_HEADER = None
+    CSRF_TRUSTED_ORIGINS = [
+        "http://localhost:3000",
+    ]
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -153,7 +159,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://ai-search-tool-1.onrender.com'
 ]
 
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = False
 CORS_ALLOW_METHODS = [
     'DELETE',
     'GET',
@@ -174,18 +180,8 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
-# Always allow CORS preflight requests
-CORS_ALLOW_ALL_ORIGINS = True  # Temporarily set to True for testing
-CORS_ORIGIN_ALLOW_ALL = True   # Temporarily set to True for testing
 CORS_PREFLIGHT_MAX_AGE = 86400  # 24 hours
-
-# Additional CORS settings
-CORS_EXPOSE_HEADERS = ['*']
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-    'https://ai-search-tool.netlify.app',
-    'https://ai-search-tool-1.onrender.com'
-]
+CORS_EXPOSE_HEADERS = ['Content-Type', 'X-Requested-With']
 
 # Add security headers
 SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin'
