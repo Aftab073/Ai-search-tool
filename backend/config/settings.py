@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from corsheaders.defaults import default_headers
 
 # Load environment variables from .env file
 load_dotenv()
@@ -155,9 +156,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'https://ai-search-tool.netlify.app',
-    'https://ai-search-tool-1.onrender.com'
+    'https://ai-search-tool.netlify.app'
 ]
+CORS_ALLOW_ALL_ORIGINS = False
+
 
 CORS_ALLOW_CREDENTIALS = False
 CORS_ALLOW_METHODS = [
@@ -168,14 +170,9 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
-CORS_ALLOW_HEADERS = [
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'access-control-allow-origin',
+    'access-control-allow-credentials',
     'x-csrftoken',
     'x-requested-with',
 ]
