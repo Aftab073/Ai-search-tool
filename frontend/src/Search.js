@@ -37,7 +37,7 @@ const DarkModeToggle = ({ darkMode, toggleDarkMode }) => {
     );
 };
 
-const API_BASE = process.env.REACT_APP_API_URL || 'https://ai-search-tool-1.onrender.com';
+const API_BASE = process.env.REACT_APP_API_URL || 'https://ai-search-tool.onrender.com';
 
 // Create axios instance with default config
 const api = axios.create({

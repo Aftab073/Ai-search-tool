@@ -135,6 +135,8 @@ if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     CSRF_TRUSTED_ORIGINS = [
         "https://ai-search-tool.netlify.app",
+        "https://ai-search-tool.onrender.com",
+        
     ]
 else:
     # Development settings
@@ -148,6 +150,8 @@ else:
     SECURE_PROXY_SSL_HEADER = None
     CSRF_TRUSTED_ORIGINS = [
         "http://localhost:3000",
+        "https://ai-search-tool.onrender.com",
+        
     ]
 
 # Default primary key field type
