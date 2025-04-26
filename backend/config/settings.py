@@ -187,6 +187,23 @@ CORS_ORIGIN_WHITELIST = [
     'https://ai-search-tool-1.onrender.com'
 ]
 
+# Ensure CORS middleware is properly ordered
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Make sure this is before CommonMiddleware
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+# Add security headers
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin'
+SECURE_REFERRER_POLICY = 'same-origin'
+
 # REST Framework settings
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [

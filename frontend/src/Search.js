@@ -39,6 +39,16 @@ const DarkModeToggle = ({ darkMode, toggleDarkMode }) => {
 
 const API_BASE = process.env.REACT_APP_API_URL || 'https://ai-search-tool-1.onrender.com';
 
+// Create axios instance with default config
+const api = axios.create({
+    baseURL: API_BASE,
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+    },
+    withCredentials: true
+});
+
 const Search = () => {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
@@ -77,7 +87,7 @@ const Search = () => {
         setLoading(true);
         setError("");
         try {
-            const response = await axios.post(`${API_BASE}/api/search/`, { query });
+            const response = await api.post('/api/search/', { query });
             if (response.data.error) {
                 setError(response.data.error);
                 setResults([]);
@@ -100,7 +110,7 @@ const Search = () => {
 
     const fetchSearchHistory = async () => {
         try {
-            const response = await axios.get(`${API_BASE}/api/history/`);
+            const response = await api.get('/api/history/');
             if (response.data.error) {
                 console.error("History error:", response.data.error);
                 setHistory([]);
@@ -116,7 +126,7 @@ const Search = () => {
 
     const clearHistory = async () => {
         try {
-            const response = await axios.delete(`${API_BASE}/api/history/`);
+            const response = await api.delete('/api/history/');
             if (response.data.error) {
                 console.error("Clear history error:", response.data.error);
             } else {
