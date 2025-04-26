@@ -181,7 +181,6 @@ CORS_PREFLIGHT_MAX_AGE = 86400  # 24 hours
 
 # Additional CORS settings
 CORS_EXPOSE_HEADERS = []
-CORS_REPLACE_HTTPS_REFERER = False
 
 # REST Framework settings
 REST_FRAMEWORK = {
