@@ -48,9 +48,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Make sure this is first
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -175,29 +175,16 @@ CORS_ALLOW_HEADERS = [
 ]
 
 # Always allow CORS preflight requests
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_ALL_ORIGINS = True  # Temporarily set to True for testing
+CORS_ORIGIN_ALLOW_ALL = True   # Temporarily set to True for testing
 CORS_PREFLIGHT_MAX_AGE = 86400  # 24 hours
 
 # Additional CORS settings
-CORS_EXPOSE_HEADERS = []
+CORS_EXPOSE_HEADERS = ['*']
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
     'https://ai-search-tool.netlify.app',
     'https://ai-search-tool-1.onrender.com'
-]
-
-# Ensure CORS middleware is properly ordered
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  # Make sure this is before CommonMiddleware
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 # Add security headers

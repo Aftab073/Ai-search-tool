@@ -46,8 +46,27 @@ const api = axios.create({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
     },
-    withCredentials: true
+    withCredentials: false  // Changed to false since we're not using cookies
 });
+
+// Add response interceptor to handle CORS errors
+api.interceptors.response.use(
+    response => response,
+    error => {
+        if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.error('Error response:', error.response);
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.error('Error request:', error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error('Error message:', error.message);
+        }
+        return Promise.reject(error);
+    }
+);
 
 const Search = () => {
     const [query, setQuery] = useState("");
@@ -87,7 +106,14 @@ const Search = () => {
         setLoading(true);
         setError("");
         try {
-            const response = await api.post('/api/search/', { query });
+            const response = await api.post('/api/search/', { 
+                query,
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                    'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+                }
+            });
             if (response.data.error) {
                 setError(response.data.error);
                 setResults([]);
