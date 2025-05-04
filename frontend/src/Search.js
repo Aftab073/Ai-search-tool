@@ -71,8 +71,6 @@ const Search = () => {
     const [filter, setFilter] = useState("All");
     const [selectedId, setSelectedId] = useState(null);
     const [sort, setSort] = useState("Relevance");
-    const [history, setHistory] = useState([]);
-    const [showHistory, setShowHistory] = useState(false);
     const [darkMode, setDarkMode] = useState(() => {
         return JSON.parse(localStorage.getItem("darkMode")) || false;
     });
@@ -122,35 +120,9 @@ const Search = () => {
         setLoading(false);
     };
 
-    const fetchSearchHistory = async () => {
-        try {
-            const response = await api.get('/api/history/');
-            if (response.data.error) {
-                console.error("History error:", response.data.error);
-                setHistory([]);
-            } else {
-                setHistory(response.data);
-            }
-        } catch (error) {
-            console.error("Error fetching history:", error);
-            setHistory([]);
-        }
-        setShowHistory(!showHistory); 
-    };
+    
 
-    const clearHistory = async () => {
-        try {
-            const response = await api.delete('/api/history/');
-            if (response.data.error) {
-                console.error("Clear history error:", response.data.error);
-            } else {
-                setHistory([]);
-            }
-        } catch (error) {
-            console.error("Error clearing history:", error);
-        }
-        setShowHistory(false);
-    };
+    
 
     const filteredResults = results.filter((item) => {
         if (filter === "All") return true;
@@ -193,76 +165,7 @@ const Search = () => {
                     </div>
                 </div>
 
-                {/* History Section */}
-                {showHistory && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className={`mb-8 p-6 rounded-xl shadow-lg ${
-                            darkMode ? "bg-gray-800" : "bg-white"
-                        }`}
-                    >
-                        <div className="flex justify-between items-center mb-4">
-                            <h2 className={`text-xl font-semibold ${
-                                darkMode ? "text-white" : "text-gray-900"
-                            }`}>
-                                Recent Searches
-                            </h2>
-                            <motion.button
-                                onClick={clearHistory}
-                                className={`px-3 py-1 rounded-lg text-sm ${
-                                    darkMode 
-                                        ? "bg-red-600 hover:bg-red-700 text-white" 
-                                        : "bg-red-500 hover:bg-red-600 text-white"
-                                }`}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                Clear All
-                            </motion.button>
-                        </div>
-                        {history.length === 0 ? (
-                            <p className={`text-center py-4 ${
-                                darkMode ? "text-gray-400" : "text-gray-600"
-                            }`}>
-                                No search history yet
-                            </p>
-                        ) : (
-                            <div className="space-y-2">
-                                {history.map((item, index) => (
-                                    <motion.div
-                                        key={index}
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: index * 0.1 }}
-                                        className={`p-3 rounded-lg cursor-pointer transition-all ${
-                                            darkMode 
-                                                ? "hover:bg-gray-700" 
-                                                : "hover:bg-gray-100"
-                                        }`}
-                                        onClick={() => {
-                                            setQuery(item.query);
-                                            setShowHistory(false);
-                                            handleSearch();
-                                        }}
-                                    >
-                                        <p className={`font-medium ${
-                                            darkMode ? "text-white" : "text-gray-900"
-                                        }`}>
-                                            {item.query}
-                                        </p>
-                                        <p className={`text-sm ${
-                                            darkMode ? "text-gray-400" : "text-gray-500"
-                                        }`}>
-                                            {new Date(item.timestamp).toLocaleString()}
-                                        </p>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        )}
-                    </motion.div>
-                )}
+               
 
                 {/* Search Section */}
                 <div className="max-w-3xl mx-auto mb-8">
