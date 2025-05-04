@@ -188,26 +188,7 @@ const Search = () => {
                         AI Search Tool
                     </motion.h1>
                     <div className="flex items-center gap-4">
-                        <motion.button
-                            onClick={fetchSearchHistory}
-                            className={`px-4 py-2 rounded-xl shadow-lg font-semibold transition-all flex items-center gap-2 ${
-                                darkMode 
-                                    ? "bg-gray-700 hover:bg-gray-600 text-white" 
-                                    : "bg-gray-200 hover:bg-gray-300 text-gray-800"
-                            }`}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            <span className="text-xl">
-                                {showHistory ? "📚" : "📖"}
-                            </span>
-                            <span className="hidden sm:inline">
-                                {showHistory ? "Hide History" : "View History"}
-                            </span>
-                            <span className="sm:hidden">
-                                {showHistory ? "Hide" : "History"}
-                            </span>
-                        </motion.button>
+                        
                         <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
                     </div>
                 </div>
